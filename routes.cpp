@@ -23,7 +23,7 @@ String Routes::request(String url) {
       String payload;
       payload = request(baseURL + "stations");
       JSONVar getRadioInfo = JSON.parse(payload);
-      String radioArr = getRadioInfo["data"];
+      String radioArr = JSON.stringify(getRadioInfo["data"]);
       return radioArr;
     }
 
@@ -32,7 +32,7 @@ String Routes::request(String url) {
         String payload;
         payload = request(baseURL + "stations/discover");
         JSONVar output = JSON.parse(payload);
-        String name = output["data"]["output"];        
+        String name = JSON.stringify(output["data"]);        
         return name;
     }
 
@@ -54,4 +54,38 @@ String Routes::request(String url) {
         }
       }
       return "Error";
+    }
+
+    String Routes::Reset(){
+      String payload;
+      payload = request(baseURL + "stations/clear");
+      return "Done";
+    }
+
+    // / PUT /api/users/{user_id}/settings?volume={volume}
+    // Update the volume
+    String Routes::UpdateVolume(const int user_id, const int volume) {
+    http.begin(baseURL + "users/" +  user_id  + "/settings");
+    http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+    String payload = "volume=";
+    payload.concat(volume);
+
+      Serial.println(payload); 
+      int httpCode = http.PUT(payload);
+      if (httpCode > 0) {
+        if (httpCode == HTTP_CODE_OK) {
+          Serial.println(http.getString());
+          return http.getString();
+        }
+      }
+      Serial.println("ik ben hier");
+      return "Error";
+    }
+
+    String Routes::GetPlayingStation() {      
+        String payload;
+        payload = request(baseURL + "stations?is_playing=1" );       
+        JSONVar output = JSON.parse(payload);                 
+        String name = JSON.stringify(output["data"][0]);   
+        return name;
     }

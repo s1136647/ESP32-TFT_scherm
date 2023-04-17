@@ -10,7 +10,7 @@ class Routes{
     // const String baseURL = "https://radio.lukedixon.nl/api/";
     // const String baseURL = "http://192.168.45.209/IPMEDT5_dashboard/public/api/";
     // const String baseURL = "http://192.168.3.47/radio/public/api/";
-    const String baseURL = "http://192.168.27.31/api/";
+    const String baseURL = "http://192.168.148.31/api/";
 
     String request(String url);
   public:
@@ -26,6 +26,8 @@ class Routes{
     String DeleteFavorite(const int user_id, const int favorite_id);
     int GetSettings(const int user_id); 
     String UpdateVolume(const int user_id, const int volume);
+    String Reset();
+    String GetPlayingStation();
     
 };
 

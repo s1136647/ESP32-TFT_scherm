@@ -145,6 +145,7 @@ void handleMainMenu() {
     if (buttonStateSelect == LOW && previous_buttonSelect == LOW && millis() - time_ > debounce) {
       selectPage = 3;
       tft.fillScreen(TFT_BLACK);
+      tft.drawString("Klik Select", 10, 90, 1);
       time_ = millis();
     }
   }
@@ -190,6 +191,8 @@ void handleHomePage() {
     tft.fillScreen(TFT_BLACK);
   }
   previous_buttonDown = buttonStateDown;
+
+  Serial.println(radioArr);
 
   if (buttonStateSelect == LOW && previous_buttonSelect == LOW && millis() - time_ > debounce) {
     route.Reset();
@@ -256,13 +259,14 @@ void handleDiscoverPage() {
   String station = name["name"];
 
   if (buttonStateSelect == LOW && previous_buttonSelect == LOW && millis() - time_ > debounce) {
+    tft.fillScreen(TFT_BLACK);
     route.Reset();
     name = JSON.parse(route.GetRandomRadio());
     Serial.println(station);
     String radioId = route.PutRadioInfo(name["id"]);
     Serial.println("Stuur id");
     time_ = millis();
-    tft.fillScreen(TFT_BLACK);
+    tft.drawString(station, 30, 90, 1);
   }
 
   tft.drawLine(0, 190, 350, 190, TFT_WHITE);
@@ -276,7 +280,6 @@ void handleDiscoverPage() {
     time_ = millis();
   }
   previous_buttonBack = buttonStateBack;
-  tft.drawString(station, 30, 90, 1);
 }
 
 // String getSongInfo() {

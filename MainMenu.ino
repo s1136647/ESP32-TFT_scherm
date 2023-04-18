@@ -59,7 +59,6 @@ void setup() {
   tft.init();
   tft.setRotation(1);
   tft.fillScreen(TFT_BLACK);
-  // tft.setTextColor(0x030303);
   tft.setTextSize(1);
   tft.setTextColor(TFT_WHITE);
 
@@ -336,6 +335,14 @@ void loop() {
     tft.fillScreen(TFT_BLACK);
   }
   previous_buttonDown = buttonStateDown;
+
+  if (cursorSelector > 2) {
+    cursorSelector = 2;
+  }
+
+  if (cursorSelector < 0) {
+    cursorSelector = 0;
+  }
 
   switch (selectPage) {
     case 1:
